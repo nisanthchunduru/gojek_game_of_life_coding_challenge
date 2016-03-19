@@ -201,5 +201,20 @@ BOARD
         it "remains dead"
       end
     end
+
+    it "can run multiple iterations" do
+      board = <<BOARD
+DDD
+AAA
+DDD
+BOARD
+      board_after_two_iterations = <<BOARD
+DDD
+AAA
+DDD
+BOARD
+      game_of_life = GameOfLife.new(board)
+      expect(game_of_life.run(iterations: 2)).to eq(board_after_two_iterations)
+    end
   end
 end

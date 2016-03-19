@@ -5,14 +5,25 @@ class GameOfLife
     @board = board
   end
 
-  def run
+  def run(options = {})
+    iteration_count = options.fetch(:iterations, 1)
+
+    board_after_one_iteration = run_once
+    if iteration_count == 1
+      board_after_one_iteration
+    else
+      GameOfLife.new(board_after_one_iteration).run(iterations: iteration_count - 1)
+    end
+  end
+
+  private
+
+  def run_once
     @board.chars.map.with_index do |cell, position|
       next "\n" if cell == "\n"
       should_live?(cell, position) ? alive_cell : dead_cell
     end.join
   end
-
-  private
 
   def should_live?(cell, position)
     alive_neighbours_count = alive_neighbours_count(position)
