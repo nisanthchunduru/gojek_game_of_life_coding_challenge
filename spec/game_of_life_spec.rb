@@ -71,6 +71,23 @@ BOARD
           expect(game_of_life.run).to eq(board_after_one_iteration)
         end
       end
+
+      context "the cell has four alive neighbours" do
+        it "dies" do
+          board = <<BOARD
+DAD
+AAA
+DAD
+BOARD
+          board_after_one_iteration = <<BOARD
+AAA
+ADA
+AAA
+BOARD
+          game_of_life = GameOfLife.new(board)
+          expect(game_of_life.run).to eq(board_after_one_iteration)
+        end
+      end
     end
   end
 end
