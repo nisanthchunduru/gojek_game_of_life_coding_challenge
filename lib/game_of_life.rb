@@ -8,12 +8,16 @@ class GameOfLife
   def run
     @board.chars.map.with_index do |cell, position|
       next "\n" if cell == "\n"
-      alive_neighbours_count = alive_neighbours_count(position)
-      [2, 3].include?(alive_neighbours_count) ? alive_cell : dead_cell
+      should_live?(position) ? alive_cell : dead_cell
     end.join
   end
 
   private
+
+  def should_live?(position)
+    alive_neighbours_count = alive_neighbours_count(position)
+    [2, 3].include?(alive_neighbours_count)
+  end
 
   def alive_neighbours_count(position)
     neighbours = neighbours(position)
