@@ -163,5 +163,43 @@ BOARD
         it "uses an infinite grid"
       end
     end
+
+    context "a cell is dead" do
+      context "the cell has zero alive neighbours" do
+        it "remains dead"
+      end
+
+      context "the cell has one alive neighbour" do
+        it "remains dead"
+      end
+
+      context "the cell has two alive neighbours" do
+        it "remains dead"
+      end
+
+      context "the cell has three alive neighbours" do
+        it "becomes a living cell"
+      end
+
+      context "the cell has four alive neighbours" do
+        it "remains dead"
+      end
+
+      context "the cell has five alive neighbours" do
+        it "remains dead"
+      end
+
+      context "the cell has six alive neighbours" do
+        it "remains dead"
+      end
+
+      context "the cell has seven alive neighbours" do
+        it "remains dead"
+      end
+
+      context "the cell has eight alive neighbours" do
+        it "remains dead"
+      end
+    end
   end
 end
