@@ -29,9 +29,26 @@ DAA
 DDD
 BOARD
           board_after_one_iteration = <<BOARD
+DAA
 DDD
+DAA
+BOARD
+          game_of_life = GameOfLife.new(board)
+          expect(game_of_life.run).to eq(board_after_one_iteration)
+        end
+      end
+
+      context "the cell has two alive neighbours" do
+        it "survives" do
+          board = <<BOARD
 DDD
+AAA
 DDD
+BOARD
+          board_after_one_iteration = <<BOARD
+AAA
+DAD
+AAA
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
