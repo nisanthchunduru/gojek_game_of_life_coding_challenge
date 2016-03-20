@@ -32,3 +32,17 @@ The output should be something like
 0 1 1 0
 0 0 0 0
 ```
+
+## Specs
+
+Specs are written in rspec
+
+```
+bundle exec rspec spec/
+```
+
+## TODO
+
+- Remove if conditionals
+- Remove loops
+- Add Travis CI
