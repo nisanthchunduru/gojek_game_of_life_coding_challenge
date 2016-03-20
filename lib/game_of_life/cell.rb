@@ -79,6 +79,7 @@ class GameOfLife
       true
     end
 
+    # Should the cell live in the next iteration?
     def should_live?
       [2, 3].include?(alive_neighbours_count)
     end
@@ -93,6 +94,7 @@ class GameOfLife
       false
     end
 
+    # Should the cell live in the next iteration?
     def should_live?
       [3].include?(alive_neighbours_count)
     end

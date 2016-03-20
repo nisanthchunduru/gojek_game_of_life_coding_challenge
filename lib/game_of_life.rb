@@ -7,6 +7,11 @@ class GameOfLife
     @board_string = board_string
   end
 
+  # @example Run one iteration of game of life
+  #   GameOfLife.new(board_string).run
+  #
+  # @example Run multiple iterations fo game of life
+  #   GameOfLife.new(board_string, iterations: 50).run
   def run(options = {})
     iteration_count = options.fetch(:iterations, 1)
 

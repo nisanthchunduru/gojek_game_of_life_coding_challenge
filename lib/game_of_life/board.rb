@@ -2,6 +2,7 @@ require "game_of_life/cell"
 
 class GameOfLife
   class Board
+    # Create a board from the input string
     def self.from_string(board_string)
       board_length = board_string.split("\n").count
       board = new(board_length)
@@ -41,6 +42,7 @@ class GameOfLife
       board_hash[cell_position]
     end
 
+    # Convert board to a displayable string
     def to_s
       (0..(@board_length - 1)).map do |x|
         (0..(@board_length - 1)).map do |y|
@@ -54,7 +56,7 @@ class GameOfLife
     private
 
     def board_hash
-      @board_hash ||= Hash.new { |_, cell_position| DeadCell.new(cell_position, self) }
+      @board_hash ||= Hash.new { |_, cell_position| DeadCell.new(cell_position, self) } # Board hash stores only living cells
     end
   end
 end
