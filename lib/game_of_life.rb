@@ -2,7 +2,7 @@ require "game_of_life/version"
 
 class GameOfLife
   def initialize(board)
-    @board = board
+    @board = board.gsub(" ", "")
   end
 
   def run(options = {})
