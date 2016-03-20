@@ -1,8 +1,155 @@
 require "game_of_life/version"
 
 class GameOfLife
-  def initialize(board)
-    @board = board.gsub(" ", "")
+  class Cell
+    attr_reader :position
+
+    def initialize(state, position, board)
+      @state, @position, @board = state, position, board
+    end
+
+    def alive?
+      @state == "1"
+    end
+
+    def x
+      @position[0]
+    end
+
+    def y
+      @position[1]
+    end
+
+    def should_live?
+      if alive?
+        [2, 3].include?(alive_neighbours_count)
+      else
+        [3].include?(alive_neighbours_count)
+      end
+    end
+
+    def to_s
+      alive? ? "1" : "0"
+    end
+
+    private
+
+    def alive_neighbours_count
+      neighbours.select { |cell| cell.alive? }.count
+    end
+
+    def neighbours
+      [
+        top_left_neighbour,
+        top_neighbour,
+        top_right_neighbour,
+        left_neighbour,
+        right_neighbour,
+        bottom_left_neighbour,
+        bottom_neighbour,
+        bottom_right_neighbour
+      ]
+    end
+
+    def top_left_neighbour
+      neighbour_position = [x - 1, y - 1]
+      @board.cell_at_position(neighbour_position)
+    end
+
+    def top_neighbour
+      neighbour_position = [x, y - 1]
+      @board.cell_at_position(neighbour_position)
+    end
+
+    def top_right_neighbour
+      neighbour_position = [x + 1, y - 1]
+      @board.cell_at_position(neighbour_position)
+    end
+
+    def left_neighbour
+      neighbour_position = [x - 1, y]
+      @board.cell_at_position(neighbour_position)
+    end
+
+    def right_neighbour
+      neighbour_position = [x + 1, y]
+      @board.cell_at_position(neighbour_position)
+    end
+
+    def bottom_left_neighbour
+      neighbour_position = [x - 1, y + 1]
+      @board.cell_at_position(neighbour_position)
+    end
+
+    def bottom_neighbour
+      neighbour_position = [x, y + 1]
+      @board.cell_at_position(neighbour_position)
+    end
+
+    def bottom_right_neighbour
+      neighbour_position = [x + 1, y + 1]
+      @board.cell_at_position(neighbour_position)
+    end
+  end
+
+  class Board
+    def self.from_string(board_string)
+      board_length = board_string.split("\n").count
+      board = new(board_length)
+
+      board_string.split("\n").each_with_index do |row, x|
+        row.split(" ").each_with_index do |char, y|
+          cell_state, cell_position = char, [x, y]
+          board.add_cell(Cell.new(cell_state, cell_position, board))
+        end
+      end
+
+      board
+    end
+
+    def initialize(board_length)
+      @board_length = board_length
+    end
+
+    def length
+      @board_length
+    end
+
+    def each_cell
+      (0..(@board_length - 1)).each do |x|
+        (0..(@board_length - 1)).each do |y|
+          yield cell_at_position([x, y])
+        end
+      end
+    end
+
+    def add_cell(cell)
+      board_hash[cell.position] = cell if cell.alive?
+    end
+
+    def cell_at_position(cell_position)
+      board_hash[cell_position]
+    end
+
+    def to_s
+      (0..(@board_length - 1)).map do |x|
+        (0..(@board_length - 1)).map do |y|
+          cell_position = [x, y]
+          cell = board_hash[cell_position]
+          cell.to_s
+        end.join(" ")
+      end.join("\n") + "\n"
+    end
+
+    private
+
+    def board_hash
+      @board_hash ||= Hash.new { |_, cell_position| Cell.new('0', cell_position, self) }
+    end
+  end
+
+  def initialize(board_string)
+    @board_string = board_string
   end
 
   def run(options = {})
@@ -19,88 +166,13 @@ class GameOfLife
   private
 
   def run_once
-    @board.chars.map.with_index do |cell, position|
-      next "\n" if cell == "\n"
-      should_live?(cell, position) ? alive_cell : dead_cell
-    end.join
-  end
-
-  def should_live?(cell, position)
-    alive_neighbours_count = alive_neighbours_count(position)
-    if alive_cell?(cell)
-      [2, 3].include?(alive_neighbours_count)
-    else
-      [3].include?(alive_neighbours_count)
+    current_board = Board.from_string(@board_string)
+    new_board = Board.new(current_board.length)
+    current_board.each_cell do |cell|
+      new_cell = Cell.new('1', cell.position, new_board)
+      new_board.add_cell(new_cell) if cell.should_live?
     end
-  end
 
-  def alive_neighbours_count(position)
-    neighbours = neighbours(position)
-    neighbours.select { |cell| alive_cell?(cell) }.count
-  end
-
-  def neighbours(position)
-    [
-      top_left_neighbour(position),
-      top_neighbour(position),
-      top_right_neighbour(position),
-      left_neighbour(position),
-      right_neighbour(position),
-      bottom_left_neighbour(position),
-      bottom_neighbour(position),
-      bottom_right_neighbour(position)
-    ]
-  end
-
-  def top_left_neighbour(position)
-    cell_at_position(position - board_length - "\n".size - 1)
-  end
-
-  def top_neighbour(position)
-    cell_at_position(position - board_length - "\n".size)
-  end
-
-  def top_right_neighbour(position)
-    cell_at_position(position - board_length - "\n".size + 1)
-  end
-
-  def left_neighbour(position)
-    cell_at_position(position - 1)
-  end
-
-  def right_neighbour(position)
-    cell_at_position(position + 1)
-  end
-
-  def bottom_left_neighbour(position)
-    cell_at_position(position + board_length + "\n".size - 1)
-  end
-
-  def bottom_neighbour(position)
-    cell_at_position(position + board_length + "\n".size)
-  end
-
-  def bottom_right_neighbour(position)
-    cell_at_position(position + board_length + "\n".size + 1)
-  end
-
-  def cell_at_position(position)
-    (0..(@board.length - 1)).include?(position) ? @board.chars[position] : nil
-  end
-
-  def board_length
-    @board.split("\n").first.length
-  end
-
-  def alive_cell?(cell)
-    cell == alive_cell
-  end
-
-  def alive_cell
-    "A"
-  end
-
-  def dead_cell
-    "D"
+    new_board.to_s
   end
 end

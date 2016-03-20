@@ -7,14 +7,14 @@ describe GameOfLife do
       context "the cell has zero alive neighbours" do
         it "dies" do
           board = <<BOARD
-DDD
-DAD
-DDD
+0 0 0
+0 1 0
+0 0 0
 BOARD
           board_after_one_iteration = <<BOARD
-DDD
-DDD
-DDD
+0 0 0
+0 0 0
+0 0 0
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -24,14 +24,15 @@ BOARD
       context "the cell has one alive neighbour" do
         it "dies" do
           board = <<BOARD
-DDD
-DAA
-DDD
+0 0 0
+0 1 1
+0 0 0
+
 BOARD
           board_after_one_iteration = <<BOARD
-DDD
-DDD
-DDD
+0 0 0
+0 0 0
+0 0 0
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -41,14 +42,14 @@ BOARD
       context "the cell has two alive neighbours" do
         it "survives" do
           board = <<BOARD
-DDD
-AAA
-DDD
+0 0 0
+1 1 1
+0 0 0
 BOARD
           board_after_one_iteration = <<BOARD
-DAD
-DAD
-DAD
+0 1 0
+0 1 0
+0 1 0
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -58,14 +59,14 @@ BOARD
       context "the cell has three alive neighbours" do
         it "survives" do
           board = <<BOARD
-DAD
-AAA
-DDD
+0 1 0
+1 1 1
+0 0 0
 BOARD
           board_after_one_iteration = <<BOARD
-AAA
-AAA
-DAD
+1 1 1
+1 1 1
+0 1 0
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -75,14 +76,14 @@ BOARD
       context "the cell has four alive neighbours" do
         it "dies" do
           board = <<BOARD
-DAD
-AAA
-DAD
+0 1 0
+1 1 1
+0 1 0
 BOARD
           board_after_one_iteration = <<BOARD
-AAA
-ADA
-AAA
+1 1 1
+1 0 1
+1 1 1
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -92,14 +93,14 @@ BOARD
       context "the cell has five alive neighbours" do
         it "dies" do
           board = <<BOARD
-AAD
-AAA
-DAD
+1 1 0
+1 1 1
+0 1 0
 BOARD
           board_after_one_iteration = <<BOARD
-ADA
-DDA
-AAA
+1 0 1
+0 0 1
+1 1 1
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -109,14 +110,14 @@ BOARD
       context "the cell has six alive neighbours" do
         it "dies" do
           board = <<BOARD
-AAA
-AAA
-DAD
+1 1 1
+1 1 1
+0 1 0
 BOARD
           board_after_one_iteration = <<BOARD
-ADA
-DDD
-AAA
+1 0 1
+0 0 0
+1 1 1
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -128,14 +129,14 @@ BOARD
       context "the cell has seven alive neighbours" do
         it "dies" do
           board = <<BOARD
-AAA
-AAA
-AAD
+1 1 1
+1 1 1
+1 1 0
 BOARD
           board_after_one_iteration = <<BOARD
-ADA
-DDD
-ADA
+1 0 1
+0 0 0
+1 0 1
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -147,14 +148,14 @@ BOARD
       context "the cell has eight alive neighbours" do
         it "dies" do
           board = <<BOARD
-AAA
-AAA
-AAA
+1 1 1
+1 1 1
+1 1 1
 BOARD
           board_after_one_iteration = <<BOARD
-ADA
-DDD
-ADA
+1 0 1
+0 0 0
+1 0 1
 BOARD
           game_of_life = GameOfLife.new(board)
           expect(game_of_life.run).to eq(board_after_one_iteration)
@@ -204,14 +205,14 @@ BOARD
 
     it "can run multiple iterations" do
       board = <<BOARD
-DDD
-AAA
-DDD
+0 0 0
+1 1 1
+0 0 0
 BOARD
       board_after_two_iterations = <<BOARD
-DDD
-AAA
-DDD
+0 0 0
+1 1 1
+0 0 0
 BOARD
       game_of_life = GameOfLife.new(board)
       expect(game_of_life.run(iterations: 2)).to eq(board_after_two_iterations)
