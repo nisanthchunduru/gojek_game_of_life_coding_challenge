@@ -1,31 +1,34 @@
-# GameOfLife
+# Game of Life
 
-TODO: Write a gem description
+My solution for Gojek's Game of Life challenge http://gojekengineering.com/
 
-## Installation
+## Installation & Usage
 
-Add this line to your application's Gemfile:
+Clone this github repo
 
-```ruby
-gem 'game_of_life'
+```
+git@github.com:nisanth074/gojek-rci-challenge.git
 ```
 
-And then execute:
+Install the required gems with bundler
 
-    $ bundle
+```
+cd gojek-rci-challenge/
+bundle install --path vendor/bundle
+```
 
-Or install it yourself as:
+and then run
 
-    $ gem install game_of_life
+```
+./game_of_life.rb seed.text
+```
 
-## Usage
+The output should be something like
 
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/game_of_life/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+```
+% ./game_of_life.rb seed.txt
+0 0 0 0
+0 1 1 0
+0 1 1 0
+0 0 0 0
+```
