@@ -43,5 +43,7 @@ bundle exec rspec spec/
 
 ## TODO
 
-- Remove loops
-- Add Travis CI
+- [x] Remove if conditionals
+- [ ] Stop mutating variables
+- [ ] Remove loops
+- [ ] Add Travis CI
