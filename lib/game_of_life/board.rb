@@ -9,7 +9,8 @@ class GameOfLife
       board_string.split("\n").each_with_index do |row, x|
         row.split(" ").each_with_index do |char, y|
           cell_state, cell_position = char, [x, y]
-          board.add_cell(Cell.new(cell_state, cell_position, board))
+          cell_class = cell_state == '1' ? LivingCell : DeadCell
+          board.add_cell(cell_class.new(cell_position, board))
         end
       end
 
@@ -53,7 +54,7 @@ class GameOfLife
     private
 
     def board_hash
-      @board_hash ||= Hash.new { |_, cell_position| Cell.new('0', cell_position, self) }
+      @board_hash ||= Hash.new { |_, cell_position| DeadCell.new(cell_position, self) }
     end
   end
 end

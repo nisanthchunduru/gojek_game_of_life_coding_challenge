@@ -2,12 +2,8 @@ class GameOfLife
   class Cell
     attr_reader :position
 
-    def initialize(state, position, board)
-      @state, @position, @board = state, position, board
-    end
-
-    def alive?
-      @state == "1"
+    def initialize(position, board)
+      @position, @board = position, board
     end
 
     def x
@@ -16,18 +12,6 @@ class GameOfLife
 
     def y
       @position[1]
-    end
-
-    def should_live?
-      if alive?
-        [2, 3].include?(alive_neighbours_count)
-      else
-        [3].include?(alive_neighbours_count)
-      end
-    end
-
-    def to_s
-      alive? ? "1" : "0"
     end
 
     private
@@ -87,6 +71,34 @@ class GameOfLife
     def bottom_right_neighbour
       neighbour_position = [x + 1, y + 1]
       @board.cell_at_position(neighbour_position)
+    end
+  end
+
+  class LivingCell < Cell
+    def alive?
+      true
+    end
+
+    def should_live?
+      [2, 3].include?(alive_neighbours_count)
+    end
+
+    def to_s
+      "1"
+    end
+  end
+
+  class DeadCell < Cell
+    def alive?
+      false
+    end
+
+    def should_live?
+      [3].include?(alive_neighbours_count)
+    end
+
+    def to_s
+      "0"
     end
   end
 end

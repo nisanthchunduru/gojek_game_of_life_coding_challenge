@@ -24,7 +24,7 @@ class GameOfLife
     current_board = Board.from_string(@board_string)
     new_board = Board.new(current_board.length)
     current_board.each_cell do |cell|
-      new_cell = Cell.new('1', cell.position, new_board)
+      new_cell = LivingCell.new(cell.position, new_board)
       new_board.add_cell(new_cell) if cell.should_live?
     end
 
