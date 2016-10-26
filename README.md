@@ -1,6 +1,6 @@
 # Game of Life
 
-My solution for Gojek's Game of Life challenge http://gojekengineering.com/
+My solution for [Gojek's](http://gojekengineering.com/) Game of Life challenge at Ruby Conf India
 
 ## Installation & Usage
 
@@ -23,7 +23,7 @@ and then run
 ./game_of_life.rb seed.text
 ```
 
-The output should be something like
+The script should output something like
 
 ```
 % ./game_of_life.rb seed.txt
@@ -42,6 +42,8 @@ bundle exec rspec spec/
 ```
 
 ## TODO
+
+Most of these TODOs are artificial conditions required by the Gojek challenge
 
 - [x] Remove if conditionals
 - [ ] Stop mutating variables
