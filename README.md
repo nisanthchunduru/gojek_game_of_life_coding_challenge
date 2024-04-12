@@ -1,6 +1,6 @@
 # Game of Life
 
-My solution for [Gojek's](http://gojekengineering.com/) Game of Life challenge at Ruby Conf India
+My solution for [Gojek's](http://gojekengineering.com/) Game of Life coding challenge at Ruby Conf India
 
 ## Installation & Usage
 
